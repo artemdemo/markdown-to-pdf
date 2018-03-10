@@ -1,0 +1,15 @@
+{
+  "name": "markdown-to-pdf",
+  "version": "1.0.0",
+  "description": "Convert markdown files to pdf",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Artem Demo",
+  "license": "MIT",
+  "dependencies": {
+    "markdown-it": "^8.4.1",
+    "phantomjs-prebuilt": "^2.1.16"
+  }
+}
