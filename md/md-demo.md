@@ -139,8 +139,7 @@ Links can get pretty fancy, so if you want the long form version, visit the
 
 Markdown uses an image syntax that is intended to resemble the syntax for links, allowing for two styles: inline and reference. Images appear like this:
 
-![Alt text](http://www.addictedtoibiza.com/wp-content/uploads/2012/12/example.png)
-
+![Alt text](./md-exmpl.png)
 
 
 	![Alt text](http://www.addictedtoibiza.com/wp-content/uploads/2012/12/example.png)
