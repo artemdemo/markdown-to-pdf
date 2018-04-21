@@ -1,27 +1,30 @@
 const debug = require('debug')('index');
 const fs = require('fs');
+const bluebird = require('bluebird');
 const printPdf = require('./source/printPdf');
 
-fs.readFile('./md/md-demo.md', 'utf8', (err, mdString) => {
-    if (err) {
-        debug(err);
-    } else {
-        fs.readFile('./source/baseStyles.css', 'utf8', (err, cssString) => {
-            if (err) {
-                debug(err);
-            } else {
-                const options = {
-                    basePath: `${process.cwd()}/md`,
-                };
-                printPdf(mdString, cssString, options)
-                    .then(() => {
-                        debug('printPdf: SUCCESS');
-                    })
-                    .catch((err) => {
-                        debug('printPdf: ERROR');
-                        debug(err);
-                    });
-            }
-        });
-    }
-});
+const readFile = bluebird.promisify(fs.readFile);
+
+bluebird
+    .props({
+        mdDemo: readFile('./md/md-demo.md', 'utf8'),
+        mdFrontPage: readFile('./md/md-front-page.md', 'utf8'),
+        cssString: readFile('./source/baseStyles.css', 'utf8'),
+    })
+    .then((result) => {
+        const options = {
+            basePath: `${process.cwd()}/md`,
+        };
+        return printPdf(
+            [
+                result.mdFrontPage,
+                result.mdDemo,
+            ],
+            'test.pdf',
+            result.cssString,
+            options,
+        )
+    })
+    .then(() => debug('printPdf: SUCCESS'))
+    .catch(err => debug(err));
+

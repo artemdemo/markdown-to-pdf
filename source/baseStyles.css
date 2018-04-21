@@ -7,3 +7,7 @@ img {
     max-width: 100%;
     display: block;
 }
+
+.page-break {
+    page-break-after: always;
+}
