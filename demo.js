@@ -11,7 +11,7 @@ const resultPdfFileName = 'printed-md.pdf';
 
 bluebird
     .props({
-        pages: bluebird.all([
+        content: bluebird.all([
             readFile('./md-demo/md-front-page.md', 'utf8'),
             readFile('./md-demo/md-demo.md', 'utf8'),
         ]),
@@ -27,7 +27,7 @@ bluebird
         debug('Deleted files:');
         debug(result.deletedFiles);
         return printPdf(
-            result.pages,
+            result.content,
             resultPdfFileName,
             options,
         )
