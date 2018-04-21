@@ -19,19 +19,20 @@ bluebird
         deletedFiles: del([`${targetDir}/*.pdf`]),
     })
     .then((result) => {
+        debug('All content files loaded');
+        debug('Deleted files:');
+        debug(result.deletedFiles);
         const options = {
             css: result.cssString,
             basePath: `${process.cwd()}/md-demo`,
             targetDir,
         };
-        debug('Deleted files:');
-        debug(result.deletedFiles);
         return printPdf(
             result.content,
             resultPdfFileName,
             options,
         )
     })
-    .then(() => debug('printPdf: SUCCESS'))
+    .then(() => debug('pdf created'))
     .catch(err => debug(err));
 

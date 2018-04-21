@@ -1,10 +1,6 @@
 const path = require('path');
 const debug = require('debug')('local-images');
 
-const defaultOptions = {
-    basePath: process.cwd(),
-};
-
 /**
  *
  * @param htmlData {String}
@@ -15,13 +11,14 @@ const defaultOptions = {
 const localImages = (htmlData, options = {}) => {
     const imageRegex = /<img[^<]+>/g;
     const srcRegex = /src="([^"]+)"/;
-
     const urlRegex = /^htt(?:p|ps):\/\/\S*/;
 
+    const defaultOptions = {
+        basePath: process.cwd(),
+    };
     const _options = Object.assign(defaultOptions, options);
 
     let resultHtml = '';
-
     let imageMatch;
     let prevIndex = 0;
 
@@ -42,7 +39,7 @@ const localImages = (htmlData, options = {}) => {
                 resultHtml += `<img src="file://${imgPathNorm}" />`;
             } else {
                 debug('‼️  Attention:');
-                debug('There is HTTP link in image. Probably there will be a problem with pdf creation');
+                debug('There is an HTTP link in image. Probably there will be a problem with pdf creation');
                 debug(imgPath);
                 resultHtml += imgTag;
             }

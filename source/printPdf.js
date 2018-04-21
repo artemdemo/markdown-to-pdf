@@ -22,8 +22,8 @@ const printPdf = async function(mdData, pdfFileName, options = {}) {
 
     const defaultOptions = {
         css: '',
-        targetDir: './',
-        basePath: './',
+        targetDir: process.cwd(),
+        basePath: process.cwd(),
     };
 
     const _options = Object.assign(defaultOptions, options);
