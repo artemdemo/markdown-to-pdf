@@ -4,19 +4,20 @@
   "description": "Convert markdown files to pdf",
   "main": "index.js",
   "scripts": {
-    "start": "npm run build",
-    "build": "DEBUG=* node index.js",
+    "start": "npm run demo",
+    "demo": "DEBUG=* node demo.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Artem Demo",
   "license": "MIT",
   "dependencies": {
-    "bluebird": "^3.5.1",
     "debug": "^3.1.0",
     "markdown-it": "^8.4.1",
     "phantom": "^4.0.12"
   },
   "devDependencies": {
-    "@types/phantom": "^3.2.4"
+    "@types/phantom": "^3.2.4",
+    "bluebird": "^3.5.1",
+    "delete": "^1.1.0"
   }
 }
