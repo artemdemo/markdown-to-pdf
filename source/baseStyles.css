@@ -1,4 +1,4 @@
-body {
+body, table {
     font-family: Arial, Tahoma, sans-serif;
     font-size: 10px;
 }
@@ -6,6 +6,25 @@ body {
 img {
     max-width: 100%;
     display: block;
+}
+
+ol, ul, li {
+    margin: 0;
+}
+
+ul, ol {
+    padding-left: 15px;
+}
+
+blockquote {
+    margin: 0;
+    padding-left: 15px;
+    font-style: italic;
+    border-left: 2px solid lightgray;
+}
+
+code {
+    font-style: normal;
 }
 
 .page-break {

@@ -13,7 +13,9 @@ bluebird
     })
     .then((result) => {
         const options = {
+            css: result.cssString,
             basePath: `${process.cwd()}/md`,
+            targetDir: `${process.cwd()}/result`,
         };
         return printPdf(
             [
@@ -21,7 +23,6 @@ bluebird
                 result.mdDemo,
             ],
             'test.pdf',
-            result.cssString,
             options,
         )
     })

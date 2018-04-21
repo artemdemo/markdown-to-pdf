@@ -1,7 +1,6 @@
 const phantom = require('phantom');
+const path = require('path');
 const debug = require('debug')('printPdf');
-const inlineImages = require('./localImages');
-const mdRender = require('./md');
 const headersConfig = require('./headers/headersConfig');
 const header = require('./headers/header');
 const footer = require('./headers/footer');
@@ -11,29 +10,34 @@ const content = require('./content');
  *
  * @param mdData {String|Array}
  * @param pdfFileName {String}
- * @param cssString {String}
  * @param options {Object}
+ * @param options.basePath {String}
+ * @param options.targetDir {String}
+ * @param options.css {String}
  * @return {Promise<void>}
  */
-const printPdf = async function(mdData, pdfFileName, cssString = '', options = {}) {
+const printPdf = async function(mdData, pdfFileName, options = {}) {
     const instance = await phantom.create();
     const page = await instance.createPage();
 
-    const renderToHtml = mdString => inlineImages(mdRender(mdString), options);
+    const defaultOptions = {
+        css: '',
+        targetDir: './',
+        basePath: './',
+    };
 
-    const resultHtml = (() => {
-        if (Array.isArray(mdData)) {
-            return mdData.map(mdString => content.pageWrap(renderToHtml(mdString))).join('');
-        }
-        return renderToHtml(mdData);
-    })();
+    const _options = Object.assign(defaultOptions, options);
+
+    const resultHtml = content.renderToHtml(mdData, {
+        basePath: _options.basePath,
+    });
 
     await page.property('viewportSize', { width: 800, height: 600 });
     await page.property(
         'content',
         `<html>
             <head>
-                <style>${cssString}</style>
+                <style>${_options.css}</style>
             </head>
             <body>${resultHtml}</body>
          </html>`,
@@ -51,7 +55,7 @@ const printPdf = async function(mdData, pdfFileName, cssString = '', options = {
         }
     });
 
-    await page.render(pdfFileName);
+    await page.render(path.join(_options.targetDir, pdfFileName));
     debug(`${pdfFileName} created`);
 
     await instance.exit();
