@@ -2,8 +2,8 @@
 Front page for markdown-pdf
 </div>
 
-<center>
+<div style='text-align: center;'>
 
 ![Alt text](./md-icon.png)
 
-</center>
+</div>
