@@ -2,7 +2,7 @@ const path = require('path');
 const debug = require('debug')('local-images');
 
 /**
- *
+ * Normalize image "src" property for local images
  * @param htmlData {String}
  * @param options {Object}
  * @param options.basePath {String}
@@ -46,7 +46,7 @@ const localImages = (htmlData, options = {}) => {
         }
         prevIndex = imgStrIndex + imgTag.length;
     }
-    resultHtml += htmlData.substring(prevIndex, htmlData.length - 1);
+    resultHtml += htmlData.substring(prevIndex, htmlData.length);
     return resultHtml;
 };
 

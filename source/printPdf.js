@@ -2,18 +2,20 @@ const phantom = require('phantom');
 const path = require('path');
 const debug = require('debug')('printPdf');
 const headersConfig = require('./headers/headersConfig');
-const header = require('./headers/header');
-const footer = require('./headers/footer');
+const headerCallback = require('./headers/header');
+const footerCallback = require('./headers/footer');
 const content = require('./content');
 
 /**
- *
+ * Main function for creating pdf file
  * @param mdData {String|Array}
  * @param pdfFileName {String}
  * @param options {Object}
  * @param options.basePath {String}
  * @param options.targetDir {String}
  * @param options.css {String}
+ * @param options.headerCallback {Function}
+ * @param options.footerCallback {Function}
  * @return {Promise<void>}
  */
 const printPdf = async function(mdData, pdfFileName, options = {}) {
@@ -24,6 +26,8 @@ const printPdf = async function(mdData, pdfFileName, options = {}) {
         css: '',
         targetDir: process.cwd(),
         basePath: process.cwd(),
+        headerCallback,
+        footerCallback,
     };
 
     const _options = Object.assign(defaultOptions, options);
@@ -47,11 +51,11 @@ const printPdf = async function(mdData, pdfFileName, options = {}) {
         margin: '1cm',
         header: {
             height: headersConfig.headerHeight,
-            contents: instance.callback(header)
+            contents: instance.callback(_options.headerCallback)
         },
         footer: {
             height: headersConfig.footerHeight,
-            contents: instance.callback(footer)
+            contents: instance.callback(_options.footerCallback)
         }
     });
 

@@ -7,7 +7,7 @@ const md = new MarkdownIt({
 });
 
 /**
- *
+ * Wrapper for md.render()
  * @param mdString {String}
  * @return {String}
  */

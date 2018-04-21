@@ -1,15 +1,12 @@
 const mdRender = require('./md');
-const inlineImages = require('./localImages');
+const localImages = require('./localImages');
 
 /**
  *
  * @param content {String}
  * @return {String}
  */
-const pageWrap = content => `
-<div class='page-break'>
-    ${content}
-</div>`;
+const pageWrap = content => `<div class='page-break'>${content}</div>`;
 
 /**
  *
@@ -18,8 +15,8 @@ const pageWrap = content => `
  * @param options.basePath {String}
  * @return {String}
  */
-const renderToHtml = (mdData, options) => {
-    const render = mdString => inlineImages(mdRender(mdString), {
+const renderToHtml = (mdData, options = {}) => {
+    const render = mdString => localImages(mdRender(mdString), {
         basePath: options.basePath,
     });
 
@@ -35,5 +32,6 @@ const renderToHtml = (mdData, options) => {
 };
 
 module.exports = {
+    pageWrap,
     renderToHtml,
 };
